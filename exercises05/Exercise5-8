@@ -1,0 +1,179 @@
+/*
+ * Exercise5-8
+ * 
+ * Copyright 2015 Stephen <me@stephenmeansme.com>
+ * 
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+ * MA 02110-1301, USA.
+ * 
+ * 
+ */
+
+
+#include <iostream>
+
+double** AllocateMatrixMemory(int numRows, int numCols);
+void DeallocateMatrixMemory(double** matrix, int* dimensions);
+
+void PopulateMatrixValues(double** matrix, int numRows, int numCols);
+void PrintMatrix(double** matrix, int numRows, int numCols);
+
+double Calc2x2Det(double** m_A);
+double Calc3x3Det(double** m_A);
+
+int main(int argc, char **argv)
+{
+	int n_1 = 2;
+	int n_2 = 3;
+
+	double** m_A = AllocateMatrixMemory(n_1, n_1);
+	double** m_B = AllocateMatrixMemory(n_2, n_2);
+
+	DeallocateMatrixMemory(m_A, dim)
+	return 0;
+}
+
+double** AllocateMatrixMemory(int* dimensions)
+{
+	double** matrix;
+	int numRows = dimensions[0];
+	int numCols = dimensions[1];
+	matrix = new double* [numRows];
+	for(int i = 0; i < dimensions[0]; i++)
+	{
+		matrix[i] = new double [numCols];
+	}
+	return matrix;
+}
+
+void DeallocateMatrixMemory(double** matrix, int* dimensions)
+{
+	for (int i = 0; i < dimensions[0]; i++)
+	{
+		delete[] matrix[i];
+	}
+}
+
+void PopulateMatrixValues(double** matrix, int* dimensions)
+{
+	srand(199004);
+	for(int i = 0; i < dimensions[0]; i++)
+	{
+		for(int j = 0; j < dimensions[1]; j++)
+		{
+			matrix[i][j] = rand() % 10;
+		}
+	}
+}
+
+void PrintMatrix(double** matrix, int* dimensions)
+{
+	for(int i = 0; i < dimensions[0]; i++)
+	{
+		for(int j = 0; j < dimensions[1]; j++)
+		{
+			std::cout << matrix[i][j] << "  ";
+		}
+		std::cout << "\n";
+	}
+}
+
+double Calc2x2Det(double** m_A)
+{
+	double det = 0.0;
+	det = m_A[0][0] * m_A[1][1] - m_A[0][1] * m_A[1][0];
+	return det;
+}
+
+double Calc3x3Det(double** m_A)
+{
+	double det = 0.0;
+	double* dim = new double [2];
+	dim[0] = 2; dim[1] = 2;
+	double** minor_1 = AllocateMatrixMemory(2, 2);
+	double** minor_2 = AllocateMatrixMemory(2, 2);
+	double** minor_3 = AllocateMatrixMemory(2, 2);
+
+	minor_1[0][0] = m_A[1][1]; minor_1[0][1] = m_A[1][2];
+	minor_1[1][0] = m_A[2][1]; minor_1[1][1] = m_A[2][2];
+
+	minor_2[0][0] = m_A[1][0]; minor_2[0][1] = m_A[1][2];
+	minor_2[1][0] = m_A[2][0]; minor_2[1][1] = m_A[2][2];
+
+	minor_3[0][0] = m_A[1][0]; minor_3[0][1] = m_A[1][1];
+	minor_3[1][0] = m_A[2][0]; minor_3[1][1] = m_A[2][1];
+
+	det += m_A[0][0] * Calc2x2Det(minor_1);
+	det += m_A[0][1] * Calc2x2Det(minor_2);
+	det += m_A[0][2] * Calc2x2Det(minor_3);
+
+	DeallocateMatrixMemory(minor_1, dim);
+	DeallocateMatrixMemory(minor_2, dim);
+	DeallocateMatrixMemory(minor_3, dim);
+
+	return det;
+}
+
+double CalcDeterminant(int n, double** m_A)
+{
+	assert(n >= 1);
+	double det = 0.0;
+	double* dim_matrix = new double[2];
+	double* dim_minor = new double[2];
+
+	dim_matrix[0] = n; dim_matrix[1] = n;
+	dim_minor[0] = n-1; dim_minor[1] = n-1
+	for(int i = 0; i < n; i++)
+	{	
+		double** minor = GetMatrixMinor(n, 0, i, m_A); 
+		det += (int)pow(-1, i) * m_A[0][i] * CalcDeterminant(n-1, minor);
+		DeallocateMatrixMemory(minor, dim_minor);
+	}
+	delete[] dim_matrix;
+	delete[] dim_minor;
+	
+	return det;
+}
+
+double GetMatrixMinor(int n, int i, int j, double** matrix)
+{
+	// Calculates the (ij)th minor of an n x n matrix
+	assert(0 <= i && i <= n-1);
+	assert(0 <= j && j <= n-1);
+	double** minor = AllocateMatrixMemory(n - 1, n - 1);
+	for(int p = 0; p < i-2; p++)
+	{
+		for(int q = 0; q < j-2; q++)
+		{
+			minor[p][q] = matrix[p][q];
+		}
+		for(int q = j; q < n; q++)
+		{
+			minor[p][q] = matrix[p][q];
+		}
+	}
+	for (int p = i; p < n; p++)
+	{
+		for(int q = 0; q < j-2; q++)
+		{
+			minor[p-1][q-1] = matrix[p][q];
+		}
+		for(int q = j; q < n; q++)
+		{
+			minor[p-1][q-1] = matrix[p][q];
+		}
+	}
+	return minor;
+}
