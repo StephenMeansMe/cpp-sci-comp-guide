@@ -48,6 +48,34 @@ double* NonSing3x3LinSolve(double** matrix, double* vector);
 
 int main(int argc, char **argv)
 {
+	int* dim_mat = new int [2];
+	dim_mat[0] = 3; dim_mat[1] = 3;
+	double** test_matrix = AllocateMatrixMemory(dim_mat);
+	double* test_vector = AllocateVectorMemory(3);
+
+	srand(199004);
+
+	PopulateMatrixValues(test_matrix, dim_mat);
+	PopulateVectorValues(test_vector, 3);
+
+	test_matrix[0][0] += 0.5;
+	test_matrix[1][1] += 0.5;
+	test_matrix[2][2] += 0.5;
+
+	std::cout << "The matrix is:\n";
+	PrintMatrix(test_matrix, dim_mat);
+	
+	std::cout << "\nThe objective vector is:\n";
+	PrintVector(test_vector, 3);
+
+	double* sol_vector = NonSing3x3LinSolve(test_matrix, test_vector);
+	std::cout << "\nThe solution vector is:\n";
+	PrintVector(sol_vector, 3);
+
+	DeallocateMatrixMemory(test_matrix, dim_mat);
+	delete[] dim_mat;
+	delete[] test_vector;
+	delete[] sol_vector;
 	
 	return 0;
 }
@@ -82,7 +110,7 @@ void DeallocateMatrixMemory(double** matrix, int* dimensions)
 
 void PopulateMatrixValues(double** matrix, int* dimensions)
 {
-	srand(199004);
+	//srand(199004);
 	for(int i = 0; i < dimensions[0]; i++)
 	{
 		for(int j = 0; j < dimensions[1]; j++)
@@ -94,7 +122,7 @@ void PopulateMatrixValues(double** matrix, int* dimensions)
 
 void PopulateVectorValues(double* vector, int numEntries)
 {
-	srand(199004);
+	//srand(199004);
 	for(int i = 0; i < numEntries; i++)
 	{
 		vector[i] = rand() % 10;
@@ -194,7 +222,7 @@ double** Invert3x3Matrix(double** m)
 	int* dim = new int [2];
 	dim[0] = 3; dim[1] = 3;
 	
-	A = m[1][2] * m[2][2] - m[1][2] * m[2][1];
+	A = m[1][1] * m[2][2] - m[1][2] * m[2][1];
 	B = -1 * (m[1][0] * m[2][2] - m[1][2] * m[2][0]);
 	C = m[1][0] * m[2][1] - m[1][1] * m[2][0];
 	
