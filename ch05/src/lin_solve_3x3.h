@@ -1,7 +1,7 @@
 /*
- * Exercise5-10.cpp
+ * lin_solve_3x3.h
  * 
- * Copyright 2015 Stephen <me@stephenmeansme.com>
+ * Copyright 2016 Stephen <me@stephenmeansme.com>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,11 +21,10 @@
  * 
  */
 
-#include "lin_solve_gauss.h"
-#include <iostream>
+#ifndef LIN_SOLVE_3X3_H
+#define LIN_SOLVE_3X3_H
 
-int main(int argc, char **argv)
-{
-	
-	return 0;
-}
+double** invert_3x3matrix(int n, double** m);
+double* lin_solve_3x3(double** matrix, double* vector);
+
+#endif

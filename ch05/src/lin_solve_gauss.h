@@ -1,7 +1,7 @@
 /*
- * Exercise5-10.cpp
+ * lin_solve_gauss.h
  * 
- * Copyright 2015 Stephen <me@stephenmeansme.com>
+ * Copyright 2016 Stephen <me@stephenmeansme.com>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,11 +21,10 @@
  * 
  */
 
-#include "lin_solve_gauss.h"
-#include <iostream>
 
-int main(int argc, char **argv)
-{
-	
-	return 0;
-}
+#ifndef LIN_SOLVE_GAUSS_H
+#define LIN_SOLVE_GAUSS_H
+
+double* lin_solve_gauss(double** A, double* b, int n);
+
+#endif
