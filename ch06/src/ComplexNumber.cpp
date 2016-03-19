@@ -25,8 +25,8 @@
 #include <cmath>
 
 // Override default constructor
-// Set real and imaginary parts to zero
 ComplexNumber::ComplexNumber() {
+	// Set real and imaginary parts to zero
 	mPart_Re = 0.0;
 	mPart_Im = 0.0;
 }
@@ -37,19 +37,49 @@ ComplexNumber::ComplexNumber( double x, double y ) {
 	mPart_Im = y;
 }
 
-// Method for computing the modulus of an imaginary number
-ComplexNumber::CalculateMod() const {
+// Overwritten copy constructor
+ComplexNumber::ComplexNumber(const ComplexNumber& other_z ) {
+	mPart_Re = other_z.GetRe();
+	mPart_Im = other_z.GetIm();
+}
+
+// Constructor to allow, e.g., ComplexNumber z(1.0) --> z = 1.0 + 0.0i
+ComplexNumber::ComplexNumber( double r ) {
+	mPart_Re = r;
+	mPart_Im = 0.0;
+}
+
+// Methods for accessing the private members
+double ComplexNumber::GetRe() {
+	return mPart_Re;
+}
+
+double ComplexNumber::GetIm() {
+	return mPart_Im;
+}
+
+// Friend functions `Re` and `Im` so one can write `z.GetIm` or `Im(z)`
+double Re( const ComplexNumber& z ) {
+	return z.mPart_Re;
+}
+
+double Im( const ComplexNumber& z ) {
+	return z.mPart_Im;
+}
+
+// Method for computing the modulus of a complex number
+double ComplexNumber::CalculateMod() const {
 	return sqrt( mPart_Re * mPart_Re + mPart_Im * mPart_Im );
 }
 
-// Method for computing the argument of an imaginary number
-ComplexNumber::CalculateArg() const {
+// Method for computing the argument of a complex number
+double ComplexNumber::CalculateArg() const {
 	return atan2( mPart_Im, mPart_Re );
 }
 
 // Method for raising a complex number to the power n using de Moivre's theorem
 // First the complex number must be converted to polar form
-ComplexNumber::CalculatePow( double n ) {
+ComplexNumber ComplexNumber::CalculatePow( double n ) {
 	double mod = CalculateMod();
 	double arg = CalculateArg();
 
@@ -61,6 +91,19 @@ ComplexNumber::CalculatePow( double n ) {
 
 	ComplexNumber z( part_re, part_im );
 	return z;
+}
+
+// Method for computing the complex conjugate `x - iy` of a complex number `x + iy`.
+ComplexNumber ComplexNumber::CalculateConjugate() const {
+	ComplexNumber w;
+	w.mPart_Re = mPart_Re;
+	w.mPart_Im = -mPart_Im;
+	return w;
+}
+
+// Method to set the complex number `x + iy` to its conjugate `x - iy`
+void ComplexNumber::SetConjugate() {
+	mPart_Im = -mPart_Im;
 }
 
 // Overloading the = (assignment) operator
@@ -95,7 +138,7 @@ ComplexNumber& ComplexNumber::operator-( const ComplexNumber& z ) const {
 
 // Overloading the insertion << operator
 std::ostream& operator<<( std::ostream& output,
-										  const ComplexNumber& z ) {
+						  const ComplexNumber& z ) {
 	ComplexNumber w;
 	// Format as "(a + bi)" or as "(a - bi)"
 	output << "(" << z.mPart_Re << " ";

@@ -43,6 +43,34 @@ public:
 	ComplexNumber operator-( const ComplexNumber& z ) const;
 	friend std::ostream& operator<<( std::ostream& output,
 									 const ComplexNumber& z );
+
+/*******************************************************************************
+						EXERCISE 6.1 -- EXTENSIONS
+ ******************************************************************************/
+
+// 1. Methods called `GetRe` and `GetIm` that allow us to access
+//    the private members
+	double GetRe();
+	double GetIm();
+
+// 2. Friend functions `Re` and `Im` so one can write `z.GetIm` or `Im(z)`
+//TODO
+	friend double Re( const ComplexNumber& z );
+	friend double Im( const ComplexNumber& z );
+
+// 3. Overwritten copy constructor
+	ComplexNumber(const ComplexNumber& other_z);
+
+// 4. Constructor to allow, e.g., ComplexNumber z(1.0) --> z = 1.0 + 0.0i
+	ComplexNumber( double r );
+
+// 5. A `const` method `CalculateConjugate` which returns the complex
+//    conjugate `x - iy` of a complex number `x + iy`.
+	ComplexNumber CalculateConjugate() const;
+	
+//6. A method `SetConjugate` which has a void return type and sets the complex
+//   number `x + iy` to its conjugate `x - iy`.
+	void SetConjugate();
 };
 
 #endif
