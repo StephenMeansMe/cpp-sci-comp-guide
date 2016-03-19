@@ -21,8 +21,9 @@
  * 
  */
 
-
 #include "get_matrix_minor.h"
+
+#include <cassert>
 
 void get_matrix_minor(int n, int i, int j, double **matrix, double **minor) {
 	// Calculates the (ij)th minor of an n x n matrix

@@ -21,10 +21,13 @@
  * 
  */
 
+#include "determinants.h"
+
+#include <cassert>
+
 #include "allocate_array.h"
 #include "delete_array.h"
-#include "determinants.h"
-#include <cassert>
+#include "get_matrix_minor.h"
 
 double det_2(double **m_A) {
 	double det = 0.0;

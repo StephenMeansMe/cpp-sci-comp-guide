@@ -1,5 +1,5 @@
 /*
- * print_array.cpp
+ * Book.hpp
  * 
  * Copyright 2016 Stephen <me@stephenmeansme.com>
  * 
@@ -20,30 +20,29 @@
  * 
  * 
  */
+#ifndef BOOKHEADERDEF
+#define BOOKHEADERDEF
 
-#include "print_array.h"
-#include <iostream>
+#include <string>
 
-void print_array(double** matrix, int numRows, int numCols) {
-	for(int i = 0; i < numRows; i++)
-	{
-		for(int j = 0; j < numCols; j++)
-		{
-			std::cout << matrix[i][j] << "  ";
-		}
-		std::cout << "\n";
-	}
-}
+class Book {
+public:
 
-void print_array(double** matrix, int* dimensions) {
-	print_array(matrix, dimensions[0], dimensions[1]);
-}
+	Book();
+	
+	std::string author;
+	std::string title;
+	std::string publisher
+	std::string format;
 
-void print_array(double* vector, int numEntries)
-{
-	for (int i = 0; i < numEntries; i++)
-	{
-		std::cout << vector[i] << "  ";
-	}
-	std::cout << "\n";
-}
+	int price;  // Given in pence <-- lol
+
+	void SetYearOfPublication( int year );
+	int GetYearOfPublication() const;
+
+private:
+
+	int mYearOfPublication;
+};
+
+#endif

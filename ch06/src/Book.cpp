@@ -1,5 +1,5 @@
 /*
- * print_array.cpp
+ * Book.cpp
  * 
  * Copyright 2016 Stephen <me@stephenmeansme.com>
  * 
@@ -21,29 +21,23 @@
  * 
  */
 
-#include "print_array.h"
-#include <iostream>
+#include "Book.hpp"
+#include <cassert>
 
-void print_array(double** matrix, int numRows, int numCols) {
-	for(int i = 0; i < numRows; i++)
-	{
-		for(int j = 0; j < numCols; j++)
-		{
-			std::cout << matrix[i][j] << "  ";
-		}
-		std::cout << "\n";
-	}
+// This overrides the default constructor
+Book::Book() {
+	author     = "unspecified";
+	title      = "unspecified";
+	publisher  = "unspecified";
+	format     = "unspecified";
+
 }
 
-void print_array(double** matrix, int* dimensions) {
-	print_array(matrix, dimensions[0], dimensions[1]);
+void Book::SetYearOfPublication( int year ) {
+	assert( ( year > 1440 ) and ( year < 2020 ) );
+	mYearOfPublication = year;
 }
 
-void print_array(double* vector, int numEntries)
-{
-	for (int i = 0; i < numEntries; i++)
-	{
-		std::cout << vector[i] << "  ";
-	}
-	std::cout << "\n";
+int Book::GetYearOfPublication() const {
+	return mYearOfPublication;
 }

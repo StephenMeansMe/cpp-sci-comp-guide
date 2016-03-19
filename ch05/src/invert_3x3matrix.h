@@ -1,7 +1,7 @@
 /*
- * Exercise5-10.cpp
+ * invert_3x3matrix.h
  * 
- * Copyright 2015 Stephen <me@stephenmeansme.com>
+ * Copyright 2016 Stephen <me@stephenmeansme.com>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -21,37 +21,12 @@
  * 
  */
 
-#include <iostream>
 
-#include "allocate_array.h"
-#include "delete_array.h"
-#include "lin_solve_gauss.h"
-#include "multiply.h"
-#include "print_array.h"
+#include <iostream>
 
 int main(int argc, char **argv)
 {
-	int n = 3;
-	double* tb = new double [3];
-	tb[0] = 3.0; tb[1] = -1.0; tb[2] = -0.025; 
 	
-	int* dim_tA = new int [2];
-	dim_tA[0] = 3;
-	dim_tA[1] = 3;
-	double** tA = allocate_array(dim_tA);
-	tA[0][0] = 1.0; tA[0][1] = 0.0; tA[0][2] = 0.0;
-	tA[1][0] = 0.0; tA[1][1] = 1.0; tA[1][2] = 0.0;
-	tA[2][0] = 0.0; tA[2][1] = 0.0; tA[2][2] = 1.0;
-
-	double* tx = new double [3];
-	tx = lin_solve_gauss(tA, tb, n);
-
-	print_array(tA, dim_tA);
-	print_array(tb, 3);
-	print_array(tx, 3);
-
-	delete_array(tA, dim_tA);
-	delete[] tb;
-	delete[] tx;
 	return 0;
 }
+

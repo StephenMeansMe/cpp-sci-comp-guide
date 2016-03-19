@@ -24,7 +24,7 @@
 #ifndef LIN_SOLVE_3X3_H
 #define LIN_SOLVE_3X3_H
 
-double** invert_3x3matrix(int n, double** m);
+void invert_3x3matrix(int n, double** m);
 double* lin_solve_3x3(double** matrix, double* vector);
 
 #endif

@@ -21,39 +21,48 @@
  * 
  */
 
+#include "lin_solve_3x3.h"
+
+#include <iostream>
+
 #include "allocate_array.h"
 #include "determinants.h"
 #include "multiply.h"
-#include "lin_solve_3x3.h"
-#include <iostream>
 
-double** invert_3x3matrix(double** m)
-{
-	double A, B, C, D, E, F, G, H, I;
-	double det = det_3(m);
-	int* dim = new int [2];
-	dim[0] = 3; dim[1] = 3;
+double** invert_3x3matrix(double** m, int* dim) {
+
+	if ((dim[0] < 3) or (dim[1] < 3)) {
+		std::cerr << "Error: Dimensions less than 3";
+	} else if (dim[0] != dim[1]) {
+		std::cerr << "Error: Dimensions not equal";
+	} else {
+		if ((dim[0] > 3) or (dim[1] > 3)) {
+			std::cerr << "Warning: Dimensions greater than 3; pruning...";
+			dim[0] = 3;
+			dim[1] = 3;
+		} else { // dim[0] = 3 and dim[1] = 3
 	
-	A = m[1][1] * m[2][2] - m[1][2] * m[2][1];
-	B = -1 * (m[1][0] * m[2][2] - m[1][2] * m[2][0]);
-	C = m[1][0] * m[2][1] - m[1][1] * m[2][0];
+			double det = det_3(m);
 	
-	D = -1 * (m[0][1] * m[2][2] - m[0][2] * m[2][1]);
-	E = m[0][0] * m[2][2] - m[0][2] * m[2][0];
-	F = -1 * (m[0][0] * m[2][1] - m[0][1] * m[2][0]);
+			double A = m[1][1] * m[2][2] - m[1][2] * m[2][1];
+			double B = -1 * (m[1][0] * m[2][2] - m[1][2] * m[2][0]);
+			double C = m[1][0] * m[2][1] - m[1][1] * m[2][0];
+	
+			double D = -1 * (m[0][1] * m[2][2] - m[0][2] * m[2][1]);
+			double E = m[0][0] * m[2][2] - m[0][2] * m[2][0];
+			double F = -1 * (m[0][0] * m[2][1] - m[0][1] * m[2][0]);
 
-	G = m[0][1] * m[1][2] - m[0][2] * m[1][1];
-	H = -1 * (m[0][0] * m[1][2] - m[0][2] * m[1][0]);
-	I = m[0][0] * m[1][1] - m[0][1] * m[1][0];
+			double G = m[0][1] * m[1][2] - m[0][2] * m[1][1];
+			double H = -1 * (m[0][0] * m[1][2] - m[0][2] * m[1][0]);
+			double I = m[0][0] * m[1][1] - m[0][1] * m[1][0];
 
-	double** inverse = allocate_array(dim);
-	inverse[0][0] = A; inverse[0][1] = D; inverse[0][2] = G;
-	inverse[1][0] = B; inverse[1][1] = E; inverse[1][2] = H;
-	inverse[2][0] = C; inverse[2][1] = F; inverse[2][2] = I;
+			m[0][0] = A; m[0][1] = D; m[0][2] = G;
+			m[1][0] = B; inverse[1][1] = E; inverse[1][2] = H;
+			m[2][0] = C; inverse[2][1] = F; inverse[2][2] = I;
 
-	inverse = multiply(1 / det, inverse, dim);
-	delete[] dim;
-	return inverse;
+			m = multiply(1 / det, m, dim);
+		}
+	}
 }
 
 double* lin_solve_3x3(double** matrix, double* vector) {

@@ -26,5 +26,7 @@
 #define LIN_SOLVE_GAUSS_H
 
 double* lin_solve_gauss(double** A, double* b, int n);
+void pivot_rows(double** A, int row1, int row2, int n);
+void back_solve(double** T, double* x, int n);
 
 #endif

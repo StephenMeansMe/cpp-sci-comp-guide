@@ -10,13 +10,13 @@ ALL_1=ch05ex01 ch05ex02 ch05ex03 ch05ex04 ch05ex05
 ALL_2=ch05ex06 ch05ex07 ch05ex08 ch05ex09 ch05ex10
 ARRAY_H_1=src/allocate_array.h src/delete_array.h 
 ARRAY_H_2=src/populate_values.h src/print_array.h
-ARRAY_O_1=$(ARRAY_H_1:.h=.o)
-ARRAY_O_2=$(ARRAY_H_2:.h=.o)
+ARRAY_O_1=allocate_array.o delete_array.o
+ARRAY_O_2=populate_values.o print_array.o
 
 # ---------------------------------------------------------------------------- #
 # Generic Compilations
 
-all: $(ALL)
+all: $(ALL_1) $(ALL_2)
 
 clean:
 	rm *.o
@@ -81,6 +81,13 @@ multiply.o: src/multiply.cpp src/allocate_array.h src/multiply.h
 determinants.o: src/determinants.cpp src/determinants.h
 	$(CC) $(CFLAGS) src/determinants.cpp
 
+get_matrix_minor.o: src/get_matrix_minor.cpp src/get_matrix_minor.h
+	$(CC) $(CFLAGS) src/get_matrix_minor.cpp
+
+LIN_SOLVE_3X3_H=src/allocate_array.h src/determinants.h src/multiply.h
+lin_solve_3x3.o: src/lin_solve_3x3.cpp src/lin_solve_3x3.h $(LIN_SOLVE_3X3_H)
+	$(CC) $(CFLAGS) src/lin_solve_3x3.cpp
+
 # ---------------------------------------------------------------------------- #
 # CH. 05, EXERCISE 05
 
@@ -113,26 +120,26 @@ ch05ex07: ch05ex07.o calculate_p_norm.o
 ch05ex08.o: src/ch05ex08.cpp $(ARRAY_H) src/determinants.h
 	$(CC) $(CFLAGS) src/ch05ex08.cpp
 ch05ex08: ch05ex08.o $(ARRAY_O) determinants.o
-	$(CC) $(CFLAGS) ch05ex08.o $(ARRAY_O) determinants.o -o ch05ex08
+	$(CC) $(LDFLAGS) ch05ex08.o $(ARRAY_O) determinants.o -o ch05ex08
 
 # ---------------------------------------------------------------------------- #
 # CH. 05, EXERCISE 09
 
-CH05EX09_H=src/determinants.h src/lin_solve_3x3.h
-CH05EX09_O=$(CH05EX09_H:.h=.o)
+CH05EX09_H=src/get_matrix_minor.h src/lin_solve_3x3.h src/multiply.h
+CH05EX09_O=get_matrix_minor.o lin_solve_3x3.o multiply.o
 
-ch05ex09.o: src/ch05ex09.cpp $(ARRAY_H) $(CH05EX09_H)
+ch05ex09.o: src/ch05ex09.cpp $(ARRAY_H_1) $(ARRAY_H_2) $(CH05EX09_H)
 	$(CC) $(CFLAGS) src/ch05ex09.cpp
 ch05ex09: ch05ex09.o $(CH05EX09_O)
-	$(CC) $(LDFLAGS) ch05ex09.o $(ARRAY_O) $(CH05EX09_O) -o ch05ex09
+	$(CC) $(LDFLAGS) ch05ex09.o $(ARRAY_O_1) $(ARRAY_O_2) $(CH05EX09_O) -o ch05ex09
 
 # ---------------------------------------------------------------------------- #
 # CH. 05, EXERCISE 10
 
-CH05EX10_H=src/lin_solve_gauss.h
-CH05EX10_O=$(CH05EX10_H:.h=.o)
+CH05EX10_H=src/lin_solve_gauss.h src/multiply.h
+CH05EX10_O=lin_solve_gauss.o multiply.o
 
-ch05ex10.o: src/ch05ex10 $(ARRAY_H) $(CH05EX10_H)
+ch05ex10.o: src/ch05ex10 $(ARRAY_H_1) $(ARRAY_H_2) $(CH05EX10_H)
 	$(CC) $(CFLAGS) src/ch05ex10.cpp
-ch05ex10: ch05ex10.o $(CH05EX10_O)
-	$(CC) $(CFLAGS) ch05ex10.o $(ARRAY_O) $(CH05EX10_O) -o ch05ex10
+ch05ex10: ch05ex10.o $(CH05EX10_O) $(ARRAY_O_1) $(ARRAY_O_2)
+	$(CC) $(LDFLAGS) ch05ex10.o $(ARRAY_O_1) $(CH05EX10_O_2) -o ch05ex10
