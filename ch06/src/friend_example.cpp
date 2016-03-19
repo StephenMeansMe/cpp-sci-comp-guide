@@ -1,13 +1,12 @@
 /*
- * Book.hpp
+ * friend_example.cpp
  * 
  * Copyright 2016 Stephen <me@stephenmeansme.com>
  * 
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 2 of the License, or
- * (at your option) any later version.
- * 
+e * 
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
@@ -20,31 +19,31 @@
  * 
  * 
  */
-#ifndef BOOKHEADERDEF
-#define BOOKHEADERDEF
 
-#include <string>
+#include "friend_example.hpp"
 
-class Book {
-public:
+// Constructor to set private members
+ExampleClass::ExampleClass( double member1, double member2 ) {
+	mMemberVariable1 = member1;
+	mMemberVariable2 = member2;
+}
 
-	Book();
-	Book(const Book& otherBook);
-	Book(std::string bookTitle);
-	
-	std::string author;
-	std::string title;
-	std::string publisher;
-	std::string format;
+// GetMinimum is a member method
+double ExampleClass::GetMinimum() const {
+	if( mMemberVariable1 < mMemberVariable2 ) {
+		return mMemberVariable1;
+	} else {
+		// mMemberVariable1 >= mMemberVariable2
+		return mMemberVariable2;
+	}
+}
 
-	int price;  // Given in pence <-- lol
-
-	void SetYearOfPublication( int year );
-	int GetYearOfPublication() const;
-
-private:
-
-	int mYearOfPublication;
-};
-
-#endif
+// GetMaximum is a friend function
+double GetMaximum( const ExampleClass& egClass ) {
+	if( egClass.mMemberVariable1 > egClass.mMemberVariable2) {
+		return egClass.mMemberVariable1;
+	} else {
+		// egClass.Var1 <= egClass.Var2
+		return egClass.mMemberVariable2;
+	}
+}

@@ -30,7 +30,22 @@ Book::Book() {
 	title      = "unspecified";
 	publisher  = "unspecified";
 	format     = "unspecified";
+}
 
+// This overrides the default copy constructor
+Book::Book(const Book& otherBook) {
+	author    = otherBook.author;
+	title     = otherBook.title;
+	publisher = otherBook.publisher;
+	format    = otherBook.format;
+	price     = otherBook.price;
+
+	mYearOfPublication = otherBook.GetYearOfPublication();
+}
+
+// Specialized constructor
+Book::Book(std::string bookTitle) {
+	title = bookTitle;
 }
 
 void Book::SetYearOfPublication( int year ) {

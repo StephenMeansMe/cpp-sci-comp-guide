@@ -1,5 +1,5 @@
 /*
- * Book.hpp
+ * friend_example.hpp
  * 
  * Copyright 2016 Stephen <me@stephenmeansme.com>
  * 
@@ -20,31 +20,19 @@
  * 
  * 
  */
-#ifndef BOOKHEADERDEF
-#define BOOKHEADERDEF
 
-#include <string>
+#ifndef EXAMPLECLASSDEF
+#define EXAMPLECLASSDEF
 
-class Book {
-public:
-
-	Book();
-	Book(const Book& otherBook);
-	Book(std::string bookTitle);
-	
-	std::string author;
-	std::string title;
-	std::string publisher;
-	std::string format;
-
-	int price;  // Given in pence <-- lol
-
-	void SetYearOfPublication( int year );
-	int GetYearOfPublication() const;
-
+class ExampleClass {
 private:
+	double mMemberVariable1;
+	double mMemberVariable2;
 
-	int mYearOfPublication;
+public:
+	ExampleClass( double member1, double member2 );
+	double GetMinimum() const;
+	friend double GetMaximum( const ExampleClass& egClass );
 };
 
 #endif

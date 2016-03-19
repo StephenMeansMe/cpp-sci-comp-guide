@@ -1,5 +1,5 @@
 /*
- * Book.hpp
+ * example6_7.cpp
  * 
  * Copyright 2016 Stephen <me@stephenmeansme.com>
  * 
@@ -20,31 +20,25 @@
  * 
  * 
  */
-#ifndef BOOKHEADERDEF
-#define BOOKHEADERDEF
 
-#include <string>
+#include "Book.hpp"
+#include <iostream>
 
-class Book {
-public:
+int main(int argc, char **argv)
+{
+	Book good_read;
 
-	Book();
-	Book(const Book& otherBook);
-	Book(std::string bookTitle);
-	
-	std::string author;
-	std::string title;
-	std::string publisher;
-	std::string format;
+	good_read.author = "C S Lewis";
+	good_read.title = "The silver chair";
+	good_read.publisher = "Geoffrey Bles";
+	good_read.price = 699;
+	good_read.format = "paperback";
+	good_read.SetYearOfPublication(1953);
 
-	int price;  // Given in pence <-- lol
+	Book another_book(good_read);
 
-	void SetYearOfPublication( int year );
-	int GetYearOfPublication() const;
+	Book an_extra_book("The Magician's nephew");
 
-private:
+	return 0;
+}
 
-	int mYearOfPublication;
-};
-
-#endif

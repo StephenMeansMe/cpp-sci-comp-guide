@@ -1,5 +1,5 @@
 /*
- * Book.hpp
+ * example6_3.cpp
  * 
  * Copyright 2016 Stephen <me@stephenmeansme.com>
  * 
@@ -20,31 +20,16 @@
  * 
  * 
  */
-#ifndef BOOKHEADERDEF
-#define BOOKHEADERDEF
 
-#include <string>
+#include "friend_example.hpp"
+#include <iostream>
 
-class Book {
-public:
+int main(int argc, char **argv)
+{
+	ExampleClass example( 2.0, 3.0 );
+	std::cout << "Minimum value = " << example.GetMinimum() << "\n";
+	std::cout << "Maximum value = " << GetMaximum(example) << "\n";
 
-	Book();
-	Book(const Book& otherBook);
-	Book(std::string bookTitle);
-	
-	std::string author;
-	std::string title;
-	std::string publisher;
-	std::string format;
+	return 0;
+}
 
-	int price;  // Given in pence <-- lol
-
-	void SetYearOfPublication( int year );
-	int GetYearOfPublication() const;
-
-private:
-
-	int mYearOfPublication;
-};
-
-#endif
